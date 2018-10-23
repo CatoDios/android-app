@@ -1,0 +1,40 @@
+import dependencies.Deps
+import config.Config
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+android {
+    compileSdkVersion Config.Android.compileSdkVersion
+
+    defaultConfig {
+        applicationId Config.Android.applicationId
+        minSdkVersion Config.Android.minSdkVersion
+        targetSdkVersion Config.Android.targetSdkVersion
+        versionCode Config.Android.versionCode
+        versionName Config.Android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Deps.Libs.kotlinStd
+    implementation Deps.Libs.appcompat
+    implementation Deps.Libs.constraintLayout
+    testImplementation Deps.TestLibs.junit
+    androidTestImplementation Deps.TestLibs.runner
+    androidTestImplementation Deps.TestLibs.espresso
+}
