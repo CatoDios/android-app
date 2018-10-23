@@ -1,9 +1,11 @@
 import dependencies.Deps
 import config.Config
 
-apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-android-extensions"
+}
 
 android {
     compileSdkVersion Config.Android.compileSdkVersion
@@ -14,14 +16,88 @@ android {
         targetSdkVersion Config.Android.targetSdkVersion
         versionCode Config.Android.versionCode
         versionName Config.Android.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled Config.Android.multiDexEnabled
+        vectorDrawables.useSupportLibrary Config.Android.useSupportLibrary
     }
+
+    splits {
+        abi {
+            enable Config.Abi.enable
+            reset()
+            include Config.Abi.includes
+            universalApk Config.Abi.universalApk
+        }
+    }
+
+    packagingOptions {
+        excludes -= Config.Packaging.excludes
+    }
+
+    lintOptions {
+        quiet Config.Lint.quiet
+        abortOnError Config.Lint.abortOnError
+        ignoreWarnings Config.Lint.ignoreWarnings
+        checkAllWarnings Config.Lint.checkAllWarnings
+        warningsAsErrors Config.Lint.warningsAsErrors
+        noLines Config.Lint.noLines
+        showAll Config.Lint.showAll
+
+        lintConfig file(Config.Lint.file)
+        xmlOutput file("$project.buildDir/$Config.Lint.xmlOutput")
+        htmlOutput file("$project.buildDir/$Config.Lint.htmlOutput")
+    }
+
+    signingConfigs {
+        def env = new Properties()
+
+        env.load(new FileInputStream(rootProject.file(Config.SigningConfigs.env)))
+
+        ci {
+            storeFile rootProject.file(env[Config.SigningConfigs.storeFile])
+            storePassword env[Config.SigningConfigs.storePassword]
+            keyAlias env[Config.SigningConfigs.keyAlias]
+            keyPassword env[Config.SigningConfigs.keyPassword]
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix Config.BuildTypes.Debug.appIdSuffix
+            versionNameSuffix  Config.BuildTypes.Debug.versionSuffix
+
+            debuggable Config.BuildTypes.Debug.debuggable
+            shrinkResources Config.BuildTypes.Debug.shrinkResources
+            minifyEnabled Config.BuildTypes.Debug.minify
+
+            signingConfig signingConfigs.ci
+        }
+        staging {
+            applicationIdSuffix Config.BuildTypes.Staging.appIdSuffix
+            versionNameSuffix Config.BuildTypes.Staging.versionSuffix
+
+            debuggable Config.BuildTypes.Staging.debuggable
+            shrinkResources Config.BuildTypes.Staging.shrinkResources
+            minifyEnabled Config.BuildTypes.Staging.minify
+
+            signingConfig signingConfigs.ci
+        }
         release {
-            minifyEnabled false
+            applicationIdSuffix Config.BuildTypes.Release.appIdSuffix
+            versionNameSuffix  Config.BuildTypes.Release.versionSuffix
+
+            debuggable Config.BuildTypes.Release.debuggable
+            shrinkResources Config.BuildTypes.Release.shrinkResources
+            minifyEnabled Config.BuildTypes.Release.minify
+
+            signingConfig signingConfigs.ci
+
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
         test.java.srcDirs += "src/test/kotlin"
@@ -31,9 +107,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
     implementation Deps.Libs.kotlinStd
     implementation Deps.Libs.appcompat
     implementation Deps.Libs.constraintLayout
+    implementation Deps.Libs.multidex
+
     testImplementation Deps.TestLibs.junit
     androidTestImplementation Deps.TestLibs.runner
     androidTestImplementation Deps.TestLibs.espresso

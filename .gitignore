@@ -1,4 +1,4 @@
-# Mac File 
+# Mac File
 .DS_Store
 
 # Built application files
@@ -61,3 +61,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# Ignore
+config/*.jks
+config/*.properties

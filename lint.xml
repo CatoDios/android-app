@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<lint>
+    <issue id="GoogleAppIndexWarning" severity="ignore" />
+    <!-- Turns off checks for the issue IDs you specify. -->
+    <issue id="TypographyFractions" severity="ignore" />
+    <issue id="TypographyQuotes" severity="ignore" />
+    <!-- Some libraries have issues with this. -->
+    <issue id="InvalidPackage" severity="ignore" />
+    <!-- For testing purpose. This is safe to remove. -->
+    <issue id="IconDensities" severity="ignore" />
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+    <!-- Turns on checks for the issue IDs you specify. These checks are in -->
+    <!-- addition to the default lint checks. -->
+    <issue id="RtlHardcoded" severity="error" />
+    <issue id="RtlCompat" severity="error" />
+    <issue id="RtlEnabled" severity="error" />
+    <!-- To enable checks for only a subset of issue IDs and ignore all others, -->
+    <!-- list the issue IDs with the "check" property instead. This property overrides -->
+    <!-- any issue IDs you enable or disable using the properties above. -->
+    <issue id="NewApi" severity="warning" />
+    <issue id="InlinedApi" severity="warning" />
+</lint>
