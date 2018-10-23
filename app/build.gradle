@@ -32,6 +32,12 @@ android {
         }
     }
 
+    bundle {
+        language {
+            enableSplit Config.Language.enable
+        }
+    }
+
     packagingOptions {
         excludes -= Config.Packaging.excludes
     }
@@ -64,7 +70,7 @@ android {
     }
 
     buildTypes {
-        debug {
+        dev {
             applicationIdSuffix Config.BuildTypes.Debug.appIdSuffix
             versionNameSuffix  Config.BuildTypes.Debug.versionSuffix
 
@@ -74,6 +80,7 @@ android {
 
             signingConfig signingConfigs.ci
         }
+
         staging {
             applicationIdSuffix Config.BuildTypes.Staging.appIdSuffix
             versionNameSuffix Config.BuildTypes.Staging.versionSuffix
@@ -84,6 +91,7 @@ android {
 
             signingConfig signingConfigs.ci
         }
+
         release {
             applicationIdSuffix Config.BuildTypes.Release.appIdSuffix
             versionNameSuffix  Config.BuildTypes.Release.versionSuffix
@@ -95,6 +103,22 @@ android {
             signingConfig signingConfigs.ci
 
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    variantFilter { variant ->
+        if (variant.buildType.name == "debug")
+            setIgnore(true)
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = Config.App.name
+            def architecture = output.filters[0].identifier
+            def buildType = variant.variantData.variantConfiguration.buildType.name
+            def version = variant.versionName
+
+            outputFileName = "${project}-${architecture}-${buildType}-${version}.apk"
         }
     }
 

@@ -1,12 +1,13 @@
 package config
 
-import java.io.File
-import java.io.FileInputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 object Config {
+    object App {
+        val name = "app"
+    }
+
     object Android {
         val minSdkVersion = 21
         val compileSdkVersion = 28
@@ -22,6 +23,10 @@ object Config {
         val enable = true
         val includes = arrayOf("armeabi-v7a", "arm64-v8a")
         val universalApk = false
+    }
+
+    object Language {
+        val enable = false
     }
 
     object Packaging {
