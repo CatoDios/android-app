@@ -18,8 +18,6 @@ object Deps {
         val androidGradle = "com.android.tools.build:gradle:$androidGradleVersion"
         val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         val easyLauncherPlugin = "com.akaita.android:easylauncher:$easyLauncherVersion"
-        val buildScanTerms = "https://gradle.com/terms-of-service"
-        val buildScanTermsAgree = "true"
     }
 
     object Libs {

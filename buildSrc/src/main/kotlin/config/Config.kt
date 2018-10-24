@@ -4,6 +4,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object Config {
+    object Build {
+        val scanTerms = "https://gradle.com/terms-of-service"
+        val scanTermsAgree = "yes"
+    }
+
     object App {
         val name = "app"
     }

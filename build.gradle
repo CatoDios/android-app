@@ -1,4 +1,5 @@
 import dependencies.Deps
+import config.Config
 
 buildscript {
     repositories {
@@ -18,8 +19,8 @@ plugins {
 }
 
 buildScan {
-    termsOfServiceUrl = Deps.BuildPlugins.buildScanTerms
-    termsOfServiceAgree = Deps.BuildPlugins.buildScanTermsAgree
+    termsOfServiceUrl = Config.Build.scanTerms
+    termsOfServiceAgree = Config.Build.scanTermsAgree
 }
 
 allprojects {
