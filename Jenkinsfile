@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                def url = "https://s3.amazonaws.com/devfest/${env.BUILD_TYPE}"
-                def prop = "key.properties"
-                def key = "${env.BUILD_TYPE}.jks"
+                url = "https://s3.amazonaws.com/devfest/${env.BUILD_TYPE}"
+                prop = "key.properties"
+                key = "${env.BUILD_TYPE}.jks"
 
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
