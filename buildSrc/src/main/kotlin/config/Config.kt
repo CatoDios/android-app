@@ -21,7 +21,7 @@ object Config {
 
     object Abi {
         val enable = true
-        val includes = arrayOf("armeabi-v7a", "arm64-v8a")
+        val includes = arrayOf("armeabi-v7a", "arm64-v8a", "x86")
         val universalApk = false
     }
 
@@ -59,20 +59,24 @@ object Config {
         private val current = LocalDateTime.now()
         private val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 
-        object Debug {
-            val appIdSuffix = ".debug"
+        object Dev {
+            val appIdSuffix = ".dev"
             val versionSuffix = "-nb.${current.format(formatter)}"
             val debuggable = true
             val shrinkResources = false
             val minify = false
+            val label = "dev"
+            val color = "#007200"
         }
 
-        object Staging {
-            val appIdSuffix = ".staging"
+        object Stage {
+            val appIdSuffix = ".stage"
             val versionSuffix = "-rc.${current.format(formatter)}"
             val debuggable = false
             val shrinkResources = true
             val minify = true
+            val label = "stage"
+            val color = "#6600CC"
         }
 
         object Release {
@@ -81,6 +85,8 @@ object Config {
             val debuggable = false
             val shrinkResources = true
             val minify = true
+            val label = ""
+            val colorEnable = false
         }
     }
 

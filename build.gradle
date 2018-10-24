@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath Deps.BuildPlugins.androidGradle
         classpath Deps.BuildPlugins.kotlinGradlePlugin
+        classpath Deps.BuildPlugins.easyLauncherPlugin
     }
 }
 

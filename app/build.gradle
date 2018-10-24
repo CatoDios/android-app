@@ -5,6 +5,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "kotlin-android-extensions"
+    id "com.akaita.android.easylauncher"
 }
 
 android {
@@ -51,7 +52,7 @@ android {
         noLines Config.Lint.noLines
         showAll Config.Lint.showAll
 
-        lintConfig file(Config.Lint.file)
+        lintConfig rootProject.file(Config.Lint.file)
         xmlOutput file("$project.buildDir/$Config.Lint.xmlOutput")
         htmlOutput file("$project.buildDir/$Config.Lint.htmlOutput")
     }
@@ -71,25 +72,29 @@ android {
 
     buildTypes {
         dev {
-            applicationIdSuffix Config.BuildTypes.Debug.appIdSuffix
-            versionNameSuffix  Config.BuildTypes.Debug.versionSuffix
+            applicationIdSuffix Config.BuildTypes.Dev.appIdSuffix
+            versionNameSuffix  Config.BuildTypes.Dev.versionSuffix
 
-            debuggable Config.BuildTypes.Debug.debuggable
-            shrinkResources Config.BuildTypes.Debug.shrinkResources
-            minifyEnabled Config.BuildTypes.Debug.minify
+            debuggable Config.BuildTypes.Dev.debuggable
+            shrinkResources Config.BuildTypes.Dev.shrinkResources
+            minifyEnabled Config.BuildTypes.Dev.minify
 
             signingConfig signingConfigs.ci
+
+            manifestPlaceholders = [app_name: Config.App.name, prefix: "${Config.BuildTypes.Dev.label} "]
         }
 
-        staging {
-            applicationIdSuffix Config.BuildTypes.Staging.appIdSuffix
-            versionNameSuffix Config.BuildTypes.Staging.versionSuffix
+        stage {
+            applicationIdSuffix Config.BuildTypes.Stage.appIdSuffix
+            versionNameSuffix Config.BuildTypes.Stage.versionSuffix
 
-            debuggable Config.BuildTypes.Staging.debuggable
-            shrinkResources Config.BuildTypes.Staging.shrinkResources
-            minifyEnabled Config.BuildTypes.Staging.minify
+            debuggable Config.BuildTypes.Stage.debuggable
+            shrinkResources Config.BuildTypes.Stage.shrinkResources
+            minifyEnabled Config.BuildTypes.Stage.minify
 
             signingConfig signingConfigs.ci
+
+            manifestPlaceholders = [app_name: Config.App.name, prefix: "${Config.BuildTypes.Stage.label} "]
         }
 
         release {
@@ -101,6 +106,8 @@ android {
             minifyEnabled Config.BuildTypes.Release.minify
 
             signingConfig signingConfigs.ci
+
+            manifestPlaceholders = [app_name: Config.App.name, prefix: Config.BuildTypes.Release.label]
 
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -126,6 +133,20 @@ android {
         main.java.srcDirs += "src/main/kotlin"
         test.java.srcDirs += "src/test/kotlin"
         androidTest.java.srcDirs += "src/androidTest/kotlin"
+    }
+}
+
+easylauncher {
+    buildTypes {
+        dev {
+            filters = [customColorRibbonFilter(Config.BuildTypes.Dev.label, Config.BuildTypes.Dev.color)]
+        }
+        stage {
+            filters = [customColorRibbonFilter(Config.BuildTypes.Stage.label, Config.BuildTypes.Stage.color)]
+        }
+        release {
+            enable Config.BuildTypes.Release.colorEnable
+        }
     }
 }
 

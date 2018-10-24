@@ -3,6 +3,7 @@ package dependencies
 object Deps {
     private const val androidGradleVersion = "3.2.1"
     private const val kotlinVersion = "1.2.71"
+    private const val easyLauncherVersion = "1.3.1"
 
     private const val supportVersion = "28.0.0"
     private const val constraintLayoutVersion = "1.1.3"
@@ -16,6 +17,7 @@ object Deps {
     object BuildPlugins {
         val androidGradle = "com.android.tools.build:gradle:$androidGradleVersion"
         val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        val easyLauncherPlugin = "com.akaita.android:easylauncher:$easyLauncherVersion"
     }
 
     object Libs {
