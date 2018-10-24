@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage("Checkout") {
             environment {
-                CONFIG_URL = "https://s3.amazonaws.com/devfest/$BUILD_TYPE"
+                CONFIG_URL = "https://s3.amazonaws.com/devfest/${buildType()}"
                 CONFIG_PROP = "key.properties"
-                CONFIG_KEY = "${BUILD_TYPE}.jks"
+                CONFIG_KEY = "${env.BUILD_TYPE}.jks"
             }
             steps {
                 sh "chmod +x ./gradlew"
