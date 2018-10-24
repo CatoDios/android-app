@@ -59,13 +59,13 @@ object Config {
         private val current = LocalDateTime.now()
         private val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 
-        object Dev {
+        object Develop {
             val appIdSuffix = ".dev"
             val versionSuffix = "-nb.${current.format(formatter)}"
             val debuggable = true
             val shrinkResources = false
             val minify = false
-            val label = "dev"
+            val label = "develop"
             val color = "#007200"
         }
 

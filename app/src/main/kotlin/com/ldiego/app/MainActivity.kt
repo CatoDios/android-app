@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     fun init() {
         val pi = applicationContext.packageManager.getPackageInfo(packageName, 0)
 
+        txtBuildType.text = BuildConfig.BUILD_TYPE
         txtVersion.text = pi.versionName
     }
 }

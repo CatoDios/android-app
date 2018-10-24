@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">app</string>
     <string name="app_version">0.0.0</string>
+    <string name="build_type">BuildType</string>
 </resources>

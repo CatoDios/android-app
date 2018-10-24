@@ -71,17 +71,17 @@ android {
     }
 
     buildTypes {
-        dev {
-            applicationIdSuffix Config.BuildTypes.Dev.appIdSuffix
-            versionNameSuffix  Config.BuildTypes.Dev.versionSuffix
+        develop {
+            applicationIdSuffix Config.BuildTypes.Develop.appIdSuffix
+            versionNameSuffix  Config.BuildTypes.Develop.versionSuffix
 
-            debuggable Config.BuildTypes.Dev.debuggable
-            shrinkResources Config.BuildTypes.Dev.shrinkResources
-            minifyEnabled Config.BuildTypes.Dev.minify
+            debuggable Config.BuildTypes.Develop.debuggable
+            shrinkResources Config.BuildTypes.Develop.shrinkResources
+            minifyEnabled Config.BuildTypes.Develop.minify
 
             signingConfig signingConfigs.ci
 
-            manifestPlaceholders = [app_name: Config.App.name, prefix: "${Config.BuildTypes.Dev.label} "]
+            manifestPlaceholders = [app_name: Config.App.name, prefix: "${Config.BuildTypes.Develop.label} "]
         }
 
         stage {
@@ -138,8 +138,8 @@ android {
 
 easylauncher {
     buildTypes {
-        dev {
-            filters = [customColorRibbonFilter(Config.BuildTypes.Dev.label, Config.BuildTypes.Dev.color)]
+        develop {
+            filters = [customColorRibbonFilter(Config.BuildTypes.Develop.label, Config.BuildTypes.Develop.color)]
         }
         stage {
             filters = [customColorRibbonFilter(Config.BuildTypes.Stage.label, Config.BuildTypes.Stage.color)]
