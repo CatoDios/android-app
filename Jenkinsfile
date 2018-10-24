@@ -54,6 +54,8 @@ def buildType() {
         dir = "stage"
     else
         dir = "develop"
+
+    name
 }
 
 def isMaster() {
