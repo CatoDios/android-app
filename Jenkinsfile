@@ -19,6 +19,30 @@ pipeline {
                 sh "curl -o config/$CONFIG_KEY $CONFIG_URL/$CONFIG_KEY"
             }
         }
+
+        stage("Static Analysis") {
+            steps {
+                echo "Static Analysis"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                echo "Static Build"
+            }
+        }
+
+        stage("Test") {
+            steps {
+                echo "Testing"
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                echo "Deploy"
+            }
+        }
     }
 
     post {
@@ -28,6 +52,8 @@ pipeline {
 
         success {
             echo "I succeeeded!"
+
+            deleteDir()
         }
 
         unstable {
@@ -36,6 +62,8 @@ pipeline {
 
         failure {
             echo "I failed :("
+
+            deleteDir()
         }
 
         changed {
