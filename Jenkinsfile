@@ -7,15 +7,16 @@ pipeline {
 
     stages {
         stage("Checkout") {
+            environment {
+                URL = "https://s3.amazonaws.com/devfest/${env.BUILD_TYPE}"
+                PROP = "key.properties"
+                KEY = "${env.BUILD_TYPE}.jks"
+            }
             steps {
-                url = "https://s3.amazonaws.com/devfest/${env.BUILD_TYPE}"
-                prop = "key.properties"
-                key = "${env.BUILD_TYPE}.jks"
-
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
-                sh "curl -o config/${prop} $url/${prop}"
-                sh "curl -o config/${key} $url/${key}"
+                sh "curl -o config/${PROP} $URL/${PROP}"
+                sh "curl -o config/${KEY} $URL/${KEY}"
             }
         }
     }
