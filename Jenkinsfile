@@ -16,7 +16,7 @@ pipeline {
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
                 sh "curl -o config/$CONFIG_PROP $CONFIG_URL/$CONFIG_PROP"
-                sh "curl -o config/${CONFIG_KEY}.jks $CONFIG_URL/${CONFIG_KEY}.jks"
+                sh "curl -o config/$CONFIG_KEY $CONFIG_URL/$CONFIG_KEY"
             }
         }
     }
