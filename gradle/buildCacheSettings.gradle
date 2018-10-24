@@ -1,0 +1,11 @@
+ext.isCiServer = System.getenv().containsKey("CI")
+
+buildCache {
+    local {
+        enabled = !isCiServer
+    }
+    remote(HttpBuildCache) {
+        url = "http://127.0.0.1:8082/cache/"
+        push = isCiServer
+    }
+}
