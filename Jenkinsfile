@@ -14,8 +14,8 @@ pipeline {
             steps {
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
-                sh "curl -o config/$CONFIG_PROP $CONFIG_URL/$BUILD_TYPE/$CONFIG_PROP"
-                sh "curl -o config/${BUILD_TYPE}.jks $CONFIG_URL/$BUILD_TYPE/${BUILD_TYPE}.jks"
+                sh "curl -o config/$CONFIG_PROP $CONFIG_URL/${env.BUILD_TYPE}/$CONFIG_PROP"
+                sh "curl -o config/${env.BUILD_TYPE}.jks $CONFIG_URL/$BUILD_TYPE/${env.BUILD_TYPE}.jks"
             }
         }
     }
