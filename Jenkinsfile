@@ -8,14 +8,15 @@ pipeline {
     stages {
         stage("Checkout") {
             environment {
-                CONFIG_URL = "https://s3.amazonaws.com/devfest/"
+                CONFIG_URL = "https://s3.amazonaws.com/devfest/$BUILD_TYPE"
                 CONFIG_PROP = "key.properties"
+                CONFIG_KEY = "${BUILD_TYPE}.jks"
             }
             steps {
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
-                sh "curl -o config/$CONFIG_PROP $CONFIG_URL/${env.BUILD_TYPE}/$CONFIG_PROP"
-                sh "curl -o config/${env.BUILD_TYPE}.jks $CONFIG_URL/$BUILD_TYPE/${env.BUILD_TYPE}.jks"
+                sh "curl -o config/$CONFIG_PROP $CONFIG_URL/$CONFIG_PROP"
+                sh "curl -o config/${CONFIG_KEY}.jks $CONFIG_URL/${CONFIG_KEY}.jks"
             }
         }
     }
@@ -48,11 +49,11 @@ def buildType() {
     def name
 
     if (isMaster())
-        dir = "release"
+        name = "release"
     else if (isStage())
-        dir = "stage"
+        name = "stage"
     else
-        dir = "develop"
+        name = "develop"
 
     name
 }
