@@ -17,12 +17,15 @@ pipeline {
                 CONFIG_KEY = "${BUILD_TYPE}.jks"
             }
             steps {
-                notify()
+                script {
+                    def notify = load "ci/notify.groovy"
+                    notify.send()
 
-                sh "chmod +x ./gradlew"
-                sh "mkdir -p config"
-                sh "curl -o config/$CONFIG_PROP $CONFIG_URL/$CONFIG_PROP"
-                sh "curl -o config/$CONFIG_KEY $CONFIG_URL/$CONFIG_KEY"
+                    sh "chmod +x ./gradlew"
+                    sh "mkdir -p config"
+                    sh "curl -o config/$CONFIG_PROP $CONFIG_URL/$CONFIG_PROP"
+                    sh "curl -o config/$CONFIG_KEY $CONFIG_URL/$CONFIG_KEY"
+                }
             }
         }
 
