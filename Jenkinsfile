@@ -1,6 +1,4 @@
 pipeline {
-    def notify = load "ci/notify.groovy"
-
     agent any
 
     environment {
@@ -15,7 +13,7 @@ pipeline {
                 CONFIG_KEY = "${BUILD_TYPE}.jks"
             }
             steps {
-                notify.send()
+                notify()
 
                 sh "chmod +x ./gradlew"
                 sh "mkdir -p config"
@@ -100,4 +98,10 @@ def isStage() {
 
 def isDevelop() {
     return env.BRANCH_NAME == "develop"
+}
+
+def notify(String buildStatus = "STARTED") {
+    def n = load "ci/notify.groovy"
+
+    n.send(buildStatus)
 }
