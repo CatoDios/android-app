@@ -14,7 +14,8 @@ pipeline {
             }
             steps {
                 script {
-                    notify()
+                    def notify = load "ci/notify.groovy"
+                    notify.send()
 
                     sh "chmod +x ./gradlew"
                     sh "mkdir -p config"
@@ -58,9 +59,10 @@ pipeline {
             script {
                 echo "I succeeeded!"
 
-                deleteDir()
+                def notify = load "ci/notify.groovy"
+                notify.send("SUCCESS")
 
-                notify()
+                deleteDir()
             }
         }
 
@@ -69,9 +71,14 @@ pipeline {
         }
 
         failure {
-            echo "I failed :("
+            script {
+                echo "I failed :("
 
-            deleteDir()
+                def notify = load "ci/notify.groovy"
+                notify.send("SUCCESS")
+
+                deleteDir()
+            }
         }
 
         changed {
@@ -104,9 +111,4 @@ def isStage() {
 
 def isDevelop() {
     return env.BRANCH_NAME == "develop"
-}
-
-def notify(String buildStatus = "STARTED") {
-    def notify = load "ci/notify.groovy"
-    notify.send()
 }
