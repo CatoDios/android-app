@@ -59,6 +59,9 @@ pipeline {
             echo "I succeeeded!"
 
             deleteDir()
+
+            def notify = load "ci/notify.groovy"
+            notify.send("SUCCESS")
         }
 
         unstable {
@@ -69,6 +72,9 @@ pipeline {
             echo "I failed :("
 
             deleteDir()
+
+            def notify = load "ci/notify.groovy"
+            notify.send("FAILED")
         }
 
         changed {
