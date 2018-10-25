@@ -6,6 +6,10 @@ pipeline {
     }
 
     stages {
+        node {
+            def notify = load "ci/notify.groovy"
+            notify.send()
+        }
         stage("Checkout") {
             environment {
                 CONFIG_URL = "https://s3.amazonaws.com/devfest/$BUILD_TYPE"
@@ -98,12 +102,4 @@ def isStage() {
 
 def isDevelop() {
     return env.BRANCH_NAME == "develop"
-}
-
-def notify(String buildStatus = "STARTED") {
-    node() {
-        def n = load "ci/notify.groovy"
-
-        n.send(buildStatus)
-    }
 }
