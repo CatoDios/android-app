@@ -101,7 +101,9 @@ def isDevelop() {
 }
 
 def notify(String buildStatus = "STARTED") {
-    def n = load "ci/notify.groovy"
+    node() {
+        def n = load "ci/notify.groovy"
 
-    n.send(buildStatus)
+        n.send(buildStatus)
+    }
 }
