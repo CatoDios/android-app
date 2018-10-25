@@ -1,3 +1,5 @@
+def notify
+
 pipeline {
     agent any
 
@@ -7,6 +9,8 @@ pipeline {
 
     stages {
         stage("Checkout") {
+            code = load "ci/notify.groovy"
+
             environment {
                 CONFIG_URL = "https://s3.amazonaws.com/devfest/$BUILD_TYPE"
                 CONFIG_PROP = "key.properties"
