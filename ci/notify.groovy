@@ -12,7 +12,9 @@ def send(String buildStatus = "STARTED") {
     slackSend (
         channel: "#ci",
         color: code,
-        message: "BUILD $buildStatus: ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
+        message: "BUILD $buildStatus: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+        channel: "#ci",
+        tokenCredentialId: "k5Fu4i2e2Wky4MYMAfef5zSO"
     )
 }
 
