@@ -1,17 +1,17 @@
 def send(String buildStatus = "STARTED") {
-    def code = "#FF0000"
+    def colorCode
 
     if (buildStatus == "STARTED") {
-        color = "#FFFF00"
+        colorCode = "#FFFF00"
     } else if (buildStatus == "SUCCESS") {
-        color = "#00FF00"
+        colorCode = "#00FF00"
     } else {
-        color = "#FF0000"
+        colorCode = "#FF0000"
     }
 
     slackSend (
-        color: code,
-        message: "BUILD $buildStatus: ${env.JOB_NAME} [${env.BUILD_NUMBER}] <br/> DEMO"
+        color: colorCode,
+        message: "BUILD $buildStatus: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (${env.RUN_DISPLAY_URL})"
     )
 }
 
