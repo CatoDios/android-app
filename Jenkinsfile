@@ -6,11 +6,11 @@ pipeline {
     }
 
     stages {
-        node {
-            def notify = load "ci/notify.groovy"
-            notify.send()
-        }
         stage("Checkout") {
+            node {
+                def notify = load "ci/notify.groovy"
+                notify.send()
+            }
             environment {
                 CONFIG_URL = "https://s3.amazonaws.com/devfest/$BUILD_TYPE"
                 CONFIG_PROP = "key.properties"
