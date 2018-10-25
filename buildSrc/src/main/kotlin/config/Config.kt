@@ -16,8 +16,10 @@ object Config {
         val modules = "app"
         val sources = "src/main/kotlin"
         val sourceEncoding = "UTF-8"
+        val exclusions = "**/*test*/**, build/**, *.iml, **/*generated*"
         val test = "src/test/kotlin"
         val testInclusions  = "**/*test*/**"
+        val coveragePlugin = "jacoco"
     }
 
     object App {
@@ -106,6 +108,7 @@ object Config {
     }
 
     object TestOptions {
+        val reportsDir = "reports/coverage"
         val includeNoLocationClasses = true
         val execution = "ANDROID_TEST_ORCHESTRATOR"
         val animationsDisabled = true

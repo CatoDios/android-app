@@ -34,11 +34,20 @@ sonarqube {
         property "sonar.modules", Config.Sonar.modules
         property "sonar.sources", Config.Sonar.sources
         property "sonar.sourceEncoding", Config.Sonar.sourceEncoding
+        property "sonar.exclusions", Config.Sonar.exclusions
         property "sonar.tests", Config.Sonar.test
-        property "sonar.java.coveragePlugin", "jacoco"
-        property 'sonar.junit.reportsPath', "${project.buildDir}/test-results/testDevelopUnitTest"
-        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDevelopUnitTest.exec"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        property "sonar.tests.inclusions", Config.Sonar.testInclusions
+
+        def unit = fileTree(dir: project.projectDir, includes: ['**/*.exec']).files;
+        def ui = fileTree(dir: project.projectDir, includes: ['**/*.ec']).files;
+        unit.addAll(ui);
+        def files = unit.join(", ");
+
+        property "sonar.jacoco.reportPaths", files
+        property "sonar.java.coveragePlugin", Config.Sonar.coveragePlugin
+        property "sonar.java.binaries", "${project.buildDir}/tmp/kotlin-classes"
+        property "sonar.java.test.binaries", "${project.buildDir}/tmp/kotlin-classes"
+        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDevelopUnitTest"
     }
 }
 

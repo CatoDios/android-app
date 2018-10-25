@@ -3,6 +3,7 @@ import dependencies.Deps
 
 jacoco {
     toolVersion = Deps.jacocoCoreVersion
+    reportsDir = file("$project.buildDir/$Config.TestOptions.reportsDir")
 }
 
 tasks.withType(Test) {
@@ -17,10 +18,10 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ["testDevelopUnitTest"]) {
     }
 
     def fileFilter = Config.TestOptions.filters
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/develop", excludes: fileFilter)
+    def developTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/develop", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/kotlin"
 
     sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
+    classDirectories = files([developTree])
     executionData = fileTree(dir: project.buildDir, includes: Config.TestOptions.executionData)
 }
