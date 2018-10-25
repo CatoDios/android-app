@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             or View.SYSTEM_UI_FLAG_IMMERSIVE)
     }
 
-    fun init() {
+    private fun init() {
         val pi = applicationContext.packageManager.getPackageInfo(packageName, 0)
 
         txtBuildType.text = BuildConfig.BUILD_TYPE

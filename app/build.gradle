@@ -6,22 +6,27 @@ plugins {
     id "kotlin-android"
     id "kotlin-android-extensions"
     id "com.akaita.android.easylauncher"
+    id "jacoco"
 }
 
+apply from: "$project.rootDir/tools/jacoco.gradle"
+
 android {
-    compileSdkVersion Config.Android.compileSdkVersion
+    compileSdkVersion Config.App.compileSdkVersion
+
+    testBuildType Config.App.testBuildType
 
     defaultConfig {
-        applicationId Config.Android.applicationId
-        minSdkVersion Config.Android.minSdkVersion
-        targetSdkVersion Config.Android.targetSdkVersion
-        versionCode Config.Android.versionCode
-        versionName Config.Android.versionName
+        applicationId Config.App.applicationId
+        minSdkVersion Config.App.minSdkVersion
+        targetSdkVersion Config.App.targetSdkVersion
+        versionCode Config.App.versionCode
+        versionName Config.App.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        multiDexEnabled Config.Android.multiDexEnabled
-        vectorDrawables.useSupportLibrary Config.Android.useSupportLibrary
+        multiDexEnabled Config.App.multiDexEnabled
+        vectorDrawables.useSupportLibrary Config.App.useSupportLibrary
     }
 
     splits {
@@ -73,11 +78,12 @@ android {
     buildTypes {
         develop {
             applicationIdSuffix Config.BuildTypes.Develop.appIdSuffix
-            versionNameSuffix  Config.BuildTypes.Develop.versionSuffix
+            versionNameSuffix Config.BuildTypes.Develop.versionSuffix
 
             debuggable Config.BuildTypes.Develop.debuggable
             shrinkResources Config.BuildTypes.Develop.shrinkResources
             minifyEnabled Config.BuildTypes.Develop.minify
+            testCoverageEnabled Config.BuildTypes.Develop.testCoverageEnabled
 
             signingConfig signingConfigs.ci
 
@@ -99,7 +105,7 @@ android {
 
         release {
             applicationIdSuffix Config.BuildTypes.Release.appIdSuffix
-            versionNameSuffix  Config.BuildTypes.Release.versionSuffix
+            versionNameSuffix Config.BuildTypes.Release.versionSuffix
 
             debuggable Config.BuildTypes.Release.debuggable
             shrinkResources Config.BuildTypes.Release.shrinkResources
@@ -110,6 +116,14 @@ android {
             manifestPlaceholders = [app_name: Config.App.name, prefix: Config.BuildTypes.Release.label]
 
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    testOptions {
+        execution Config.TestOptions.execution
+        animationsDisabled Config.TestOptions.animationsDisabled
+        unitTests {
+            includeAndroidResources = Config.TestOptions.includeAndroidResources
         }
     }
 
@@ -159,6 +173,7 @@ dependencies {
     implementation Deps.Libs.multidex
 
     testImplementation Deps.TestLibs.junit
+    testImplementation Deps.TestLibs.roboelectric
     androidTestImplementation Deps.TestLibs.runner
     androidTestImplementation Deps.TestLibs.espresso
 }

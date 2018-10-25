@@ -9,11 +9,19 @@ object Config {
         val scanTermsAgree = "yes"
     }
 
-    object App {
-        val name = "app"
+    object Sonar {
+        val projectKey = "com.ldiego.app"
+        val projectName = "App - Android -"
+        val projectDescription = "App mobile architecture"
+        val modules = "app"
+        val sources = "src/main/kotlin"
+        val sourceEncoding = "UTF-8"
+        val test = "src/test/kotlin"
+        val testInclusions  = "**/*test*/**"
     }
 
-    object Android {
+    object App {
+        val name = "app"
         val minSdkVersion = 21
         val compileSdkVersion = 28
         val targetSdkVersion = 28
@@ -22,6 +30,7 @@ object Config {
         val versionName = "1.0"
         val multiDexEnabled = true
         val useSupportLibrary = true
+        val testBuildType = "develop"
     }
 
     object Abi {
@@ -70,6 +79,7 @@ object Config {
             val debuggable = true
             val shrinkResources = false
             val minify = false
+            val testCoverageEnabled = true
             val label = "develop"
             val color = "#007200"
         }
@@ -93,6 +103,17 @@ object Config {
             val label = ""
             val colorEnable = false
         }
+    }
+
+    object TestOptions {
+        val includeNoLocationClasses = true
+        val execution = "ANDROID_TEST_ORCHESTRATOR"
+        val animationsDisabled = true
+        val includeAndroidResources = true
+        val xml = true
+        val html = true
+        val filters = listOf("**/R.class", "**/R$*.class", "**/BuildConfig.*", "**/Manifest*.*", "**/*Test*.*", "android/**/*.*", "**/*$[0-9].*")
+        val executionData = listOf("jacoco/testDevelopUnitTest.exec", "outputs/code-coverage/connected/*coverage.ec")
     }
 
 }

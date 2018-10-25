@@ -11,11 +11,13 @@ buildscript {
         classpath Deps.BuildPlugins.androidGradle
         classpath Deps.BuildPlugins.kotlinGradlePlugin
         classpath Deps.BuildPlugins.easyLauncherPlugin
+        classpath Deps.BuildPlugins.jacocoCore
     }
 }
 
 plugins {
     id "com.gradle.build-scan" version "1.16"
+    id "org.sonarqube" version "2.6.2"
 }
 
 buildScan {
@@ -23,10 +25,28 @@ buildScan {
     termsOfServiceAgree = Config.Build.scanTermsAgree
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", Config.Sonar.projectKey
+        property "sonar.projectName", Config.Sonar.projectName
+        property "sonar.projectVersion", Config.App.versionName
+        property "sonar.projectDescription", Config.Sonar.projectDescription
+        property "sonar.modules", Config.Sonar.modules
+        property "sonar.sources", Config.Sonar.sources
+        property "sonar.sourceEncoding", Config.Sonar.sourceEncoding
+        property "sonar.tests", Config.Sonar.test
+        property "sonar.java.coveragePlugin", "jacoco"
+        property 'sonar.junit.reportsPath', "${project.buildDir}/test-results/testDevelopUnitTest"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDevelopUnitTest.exec"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+    }
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/releases" }
     }
 }
 
