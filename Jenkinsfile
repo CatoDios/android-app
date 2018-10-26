@@ -45,7 +45,7 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --network host -v ${PWD}:/app -v ${$HOME}/.gradle:/root/.gradle'
+          args '-it --network host -v ${PWD}:/app -v ${HOME}/.gradle:/root/.gradle'
           reuseNode true
         }
       }
@@ -61,7 +61,7 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --network host -v ${PWD}:/app -v ${$HOME}/.gradle:/root/.gradle'
+          args '-it --network host -v ${PWD}:/app -v ${HOME}/.gradle:/root/.gradle'
           reuseNode true
         }
       }
