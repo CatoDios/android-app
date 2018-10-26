@@ -93,14 +93,9 @@ pipeline {
         echo "I succeeeded!"
 
         archiveArtifacts "**/outputs/apk/**/*.apk"
-        publishHTML target: [
-          allowMissing: false,
-          alwaysLinkToLastBuild: false,
-          keepAll: true,
-          reportDir: "**/reports/coverage/jacocoTestReport/html",
-          reportFiles: "index.html",
-          reportName: "Code Coverage"
-        ]
+
+        reportSaveTest()
+        reportSaveCoverage()
 
         def notify = load "ci/notify.groovy"
         notify.send("SUCCESS")
@@ -154,4 +149,34 @@ def isStage() {
 
 def isDevelop() {
     return env.BRANCH_NAME == "develop"
+}
+
+def reportSaveTest() {
+  try {
+    publishHTML target: [
+      allowMissing: false,
+      alwaysLinkToLastBuild: false,
+      keepAll: true,
+      reportDir: "app/build/reports/test/test${BUILD_TYPE.capitalize()}UnitTest/html",
+      reportFiles: "index.html",
+      reportName: "Test"
+    ]
+  }catch(e) {
+    echo "ERROR -> ${e.message}"
+  }
+}
+
+def reportSaveCoverage() {
+  try {
+    publishHTML target: [
+      allowMissing: false,
+      alwaysLinkToLastBuild: false,
+      keepAll: true,
+      reportDir: "app/build/reports/coverage/jacocoTestReport/html",
+      reportFiles: "index.html",
+      reportName: "Code Coverage"
+    ]
+  }catch(e) {
+    echo "ERROR -> ${e.message}"
+  }
 }
