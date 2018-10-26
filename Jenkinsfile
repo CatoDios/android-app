@@ -34,7 +34,7 @@ pipeline {
       }
       steps {
         sh "./gradlew clean"
-        withSonarQubeEnv {
+        withSonarQubeEnv("SonarQube") {
           sh "./gradlew sonarqube -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.branch=$BUILD_TYPE"
         }
       }
