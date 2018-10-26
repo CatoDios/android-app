@@ -29,7 +29,7 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args '-it --rm --network host -v ${PWD}:/app -v ${$HOME}/.gradle:/root/.gradle'
           reuseNode true
         }
       }
@@ -45,7 +45,7 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args '-it --rm --network host -v ${PWD}:/app -v ${$HOME}/.gradle:/root/.gradle'
           reuseNode true
         }
       }
@@ -61,7 +61,7 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args '-it --rm --network host -v ${PWD}:/app -v ${$HOME}/.gradle:/root/.gradle'
           reuseNode true
         }
       }
@@ -89,7 +89,7 @@ pipeline {
         def notify = load "ci/notify.groovy"
         notify.send("SUCCESS")
 
-        deleteDir()
+        // deleteDir()
       }
     }
 
@@ -104,7 +104,7 @@ pipeline {
         def notify = load "ci/notify.groovy"
         notify.send("SUCCESS")
 
-        deleteDir()
+        // deleteDir()
       }
     }
 
