@@ -157,7 +157,7 @@ def reportSaveTest() {
       allowMissing: false,
       alwaysLinkToLastBuild: false,
       keepAll: true,
-      reportDir: "app/build/reports/tests/test${BUILD_TYPE.capitalize()}UnitTest/html",
+      reportDir: "app/build/reports/tests/test${BUILD_TYPE.capitalize()}UnitTest",
       reportFiles: "index.html",
       reportName: "Test"
     ]
