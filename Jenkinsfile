@@ -29,7 +29,8 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args "-it --rm -v ${PWD}:/app"
+          reuseNode true
         }
       }
       steps {
@@ -44,7 +45,8 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args "-it --rm -v ${PWD}:/app"
+          reuseNode true
         }
       }
       steps {
@@ -59,7 +61,8 @@ pipeline {
       agent {
         docker {
           image "android:latest"
-          args '-it --rm -v ${PWD}:/app'
+          args "-it --rm -v ${PWD}:/app"
+          reuseNode true
         }
       }
       steps {
