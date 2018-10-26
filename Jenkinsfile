@@ -34,9 +34,11 @@ pipeline {
         }
       }
       steps {
-        sh "./gradlew clean"
-        withSonarQubeEnv("SonarQube") {
-          sh "./gradlew sonarqube -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.branch=$BUILD_TYPE"
+        withEnv(["CI=true"]) {
+          sh "./gradlew clean --build-cache"
+          withSonarQubeEnv("SonarQube") {
+            sh "./gradlew sonarqube -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.branch=$BUILD_TYPE --build-cache"
+          }
         }
       }
     }
@@ -50,7 +52,9 @@ pipeline {
         }
       }
       steps {
-        sh "./gradlew assemble${BUILD_TYPE.capitalize()}"
+        withEnv(["CI=true"]) {
+          sh "./gradlew assemble${BUILD_TYPE.capitalize()} --build-cache"
+        }
       }
     }
 
@@ -66,7 +70,9 @@ pipeline {
         }
       }
       steps {
-        sh "./gradlew jacocoTestReport"
+        withEnv(["CI=true"]) {
+          sh "./gradlew jacocoTestReport --build-cache"
+        }
       }
     }
 
@@ -85,6 +91,16 @@ pipeline {
     success {
       script {
         echo "I succeeeded!"
+
+        archiveArtifacts "**/outputs/apk/**/*.apk"
+        publishHTML target: [
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: "**/reports/coverage/jacocoTestReport/html",
+          reportFiles: "index.html",
+          reportName: "Code Coverage"
+        ]
 
         def notify = load "ci/notify.groovy"
         notify.send("SUCCESS")

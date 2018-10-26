@@ -5,7 +5,7 @@ def send(String buildStatus = "STARTED") {
     colorCode = "#FFFF00"
   } else if (buildStatus == "SUCCESS") {
     colorCode = "#00FF00"
-  } else if(buildStatus == "FAILED") {
+  } else if(buildStatus == "STOPPED") {
     colorCode = "#949393"
   } else {
     colorCode = "#FF0000"
